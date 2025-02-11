@@ -2,6 +2,7 @@ package com.campospadilhaa.dscommerce.entities;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -91,6 +92,19 @@ public class Order {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+
+	public Set<Orderitem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<Orderitem> items) {
+		this.items = items;
+	}
+
+	// retorna a lista de products 
+	public List<Product> getProducts() {
+		return items.stream().map(items -> items.getProduct()).toList();
 	}
 
 	@Override

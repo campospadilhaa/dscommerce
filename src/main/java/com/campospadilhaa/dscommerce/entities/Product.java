@@ -1,6 +1,7 @@
 package com.campospadilhaa.dscommerce.entities;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -98,6 +99,19 @@ public class Product {
 
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
+	}
+
+	public Set<Orderitem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<Orderitem> items) {
+		this.items = items;
+	}
+
+	// retorna a lista de orders
+	public List<Order> getOrders() {
+		return items.stream().map(items -> items.getOrder()).toList();
 	}
 
 	@Override
