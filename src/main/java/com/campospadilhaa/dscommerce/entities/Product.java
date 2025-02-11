@@ -38,7 +38,7 @@ public class Product {
 	private Set<Category> categories = new HashSet<>();
 
 	@OneToMany(mappedBy = "id.product")
-	private Set<Orderitem> items = new HashSet<>();
+	private Set<Orderitem> orderitems = new HashSet<>();
 
 	public Product() {
 
@@ -101,17 +101,17 @@ public class Product {
 		this.categories = categories;
 	}
 
-	public Set<Orderitem> getItems() {
-		return items;
+	public Set<Orderitem> getOrderitems() {
+		return orderitems;
 	}
 
-	public void setItems(Set<Orderitem> items) {
-		this.items = items;
+	public void setOrderitems(Set<Orderitem> orderitems) {
+		this.orderitems = orderitems;
 	}
 
 	// retorna a lista de orders
 	public List<Order> getOrders() {
-		return items.stream().map(items -> items.getOrder()).toList();
+		return orderitems.stream().map(orderitems -> orderitems.getOrder()).toList();
 	}
 
 	@Override
