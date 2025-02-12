@@ -121,6 +121,7 @@ public class User {
 			return false;
 
 		User other = (User) obj;
+
 		return Objects.equals(id, other.id);
 	}
 }
