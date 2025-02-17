@@ -53,10 +53,28 @@ public class ProductService {
 	public ProductDTO insert(ProductDTO productDTO) {
 
 		Product product = new Product();
+
+		copyDtoToEntity(productDTO, product);
+
+		product = productRepository.save(product);
+
+		return new ProductDTO(product);
+	}
+
+	private void copyDtoToEntity(ProductDTO productDTO, Product product) {
+
 		product.setName(productDTO.getName());
 		product.setDescription(productDTO.getDescription());
 		product.setPrice(productDTO.getPrice());
 		product.setImgUrl(productDTO.getImgUrl());
+	}
+
+	@Transactional
+	public ProductDTO update(Long id, ProductDTO productDTO) {
+
+		Product product = productRepository.getReferenceById(id); // método 'getReferenceById' não vai no banco de dados
+
+		copyDtoToEntity(productDTO, product);
 
 		product = productRepository.save(product);
 

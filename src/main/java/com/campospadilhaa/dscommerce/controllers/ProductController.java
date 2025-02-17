@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,9 +59,18 @@ public class ProductController {
 
 		productDTO = productService.insert(productDTO);
 
-		// a criação de uma URI faz com que no header do response conste o status 201 (created)
+		// a criação de uma URI faz com que no header do response conste a URL para a busca do Product
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(productDTO.getId()).toUri();
 
+		// ResponseEntity com 'created' retorna o status 201 (created)
 		return ResponseEntity.created(uri).body(productDTO);
+	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+
+		productDTO = productService.update(id, productDTO);
+
+		return ResponseEntity.ok( productDTO ); // ResponseEntity retorna o status 200
 	}
 }
