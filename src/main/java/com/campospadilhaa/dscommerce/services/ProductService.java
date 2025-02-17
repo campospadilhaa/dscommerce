@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.campospadilhaa.dscommerce.dto.ProductDTO;
 import com.campospadilhaa.dscommerce.entities.Product;
 import com.campospadilhaa.dscommerce.repositories.ProductRepository;
+import com.campospadilhaa.dscommerce.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ProductService {
@@ -24,7 +25,10 @@ public class ProductService {
 
 		Optional<Product> optionalProduct = productRepository.findById(id);
 
-		Product product = optionalProduct.get();
+		//Product product = optionalProduct.get();
+		Product product = optionalProduct.orElseThrow(
+				() -> new ResourceNotFoundException("Produto não encontrado")
+						); // get substituído pelo orElseThrow() para controlar exceção. Interceptando a exceção do Optional e lançando a minha exceção 'Produto não encontrado'
 
 		ProductDTO productDTO = new ProductDTO(product);
 
