@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.campospadilhaa.dscommerce.dto.CustomError;
+import com.campospadilhaa.dscommerce.services.exceptions.DatabaseException;
 import com.campospadilhaa.dscommerce.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,16 @@ public class ControllerExceptionHandler {
 	public ResponseEntity<CustomError> resourceNotFoundException(ResourceNotFoundException e, HttpServletRequest request) {
 
 		HttpStatus status = HttpStatus.NOT_FOUND;
+
+		CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(DatabaseException.class) // configurada a classe de exceção criada: ResourceDatabaseException
+	public ResponseEntity<CustomError> databaseException(DatabaseException e, HttpServletRequest request) {
+
+		HttpStatus status = HttpStatus.BAD_REQUEST;
 
 		CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
 
