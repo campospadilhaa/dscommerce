@@ -26,6 +26,24 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
+	/* exceção lançada através dos controles try_catch
+	 * substituído pelo método abaixo que utiliza ControllerAdvice, não é necessário o bloco try_catch 
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<?> findById(@PathVariable Long id) {
+
+		try {
+			ProductDTO productDTO = productService.findById(id);
+
+			return ResponseEntity.ok( productDTO ); // ResponseEntity retorna o status 200
+			
+		} catch (ResourceNotFoundException e) {
+
+			CustomError error = new CustomError(Instant.now(), 404, e.getMessage(), "caminho");
+
+			return ResponseEntity.status(404).body(error);
+		}
+	}*/
+
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
 
@@ -76,7 +94,7 @@ public class ProductController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
 
 		productService.delete(id);
 
