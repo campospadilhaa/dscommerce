@@ -46,6 +46,7 @@ public class ProductService {
 		// objeto Page que retorna paginação
 		List<Product> listaProduct = productRepository.findAll();
 
+		// o lambda 'stream().map' cria cada 'item' da lista (listaProduct) como um 'ProductDTO'    
 		return listaProduct.stream().map(item -> new ProductDTO(item)).toList();
 	}
 
@@ -53,6 +54,7 @@ public class ProductService {
 	public Page<ProductDTO> findAll(String name, Pageable pageable) {
 
 		// objeto Page que retorna paginação
+		//Page<Product> listaProduct = productRepository.findAll(pageable);
 		Page<Product> listaProduct = productRepository.findByName(name, pageable);
 
 		return listaProduct.map(item -> new ProductDTO(item));
