@@ -50,10 +50,10 @@ public class ProductService {
 	}
 
 	@Transactional(readOnly = true) // configuração para lock de somente leitura, a transanção fica mais rápida
-	public Page<ProductDTO> findAll(Pageable pageable) {
+	public Page<ProductDTO> findAll(String name, Pageable pageable) {
 
 		// objeto Page que retorna paginação
-		Page<Product> listaProduct = productRepository.findAll(pageable);
+		Page<Product> listaProduct = productRepository.findByName(name, pageable);
 
 		return listaProduct.map(item -> new ProductDTO(item));
 	}

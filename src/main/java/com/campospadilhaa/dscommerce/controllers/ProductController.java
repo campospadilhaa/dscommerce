@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -46,6 +47,7 @@ public class ProductController {
 		}
 	}*/
 
+	// @PathVariable: parâmetro de rota, obrigatório
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
 
@@ -63,14 +65,15 @@ public class ProductController {
 		return listaProductDTO;
 	}*/
 
+	//@RequestParam: parâmetro de requisição (consulta), opcional
 	// http://localhost:8080/products?size=12&page=0&sort=name,asc
 	// size: quantidade de itens retornados por página
 	// page: o número da página que deverá ser exibida
 	// sort: ordenação + asc/desc
 	@GetMapping
-	public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) { // parametro para gerar paginação
+	public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) { // parametro para gerar paginação
 
-		Page<ProductDTO> listaProductDTO = productService.findAll(pageable);
+		Page<ProductDTO> listaProductDTO = productService.findAll(name, pageable);
 
 		return ResponseEntity.ok( listaProductDTO ); // ResponseEntity retorna o status 200
 	}
