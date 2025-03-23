@@ -2,10 +2,14 @@ package com.campospadilhaa.dscommerce.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,9 +22,10 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +48,7 @@ public class User {
     @JoinTable(name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> listaRole = new HashSet<>();
 
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
@@ -140,19 +145,19 @@ public class User {
 		return Objects.equals(id, other.id);
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public Set<Role> getListaRole() {
+		return listaRole;
 	}
 
     // método para adicionar permissões
     public void addRole(Role role) {
-    	roles.add(role);
+    	listaRole.add(role);
     }
 
     // método para verificação se o usuário possui determinado Role passado por argumento
     public boolean hasRole(String roleName) {
 
-    	for (Role role : roles) {
+    	for (Role role : listaRole) {
 			if(role.getAuthority().equals(roleName)) {
 				return true;
 			}
@@ -160,4 +165,46 @@ public class User {
 
     	return false;
     }
+
+    ////// implementações necessárias da interface 'UserDetails'
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+
+		// retorna a lista de "listaRole" que implementa "GrantedAuthority"
+		return listaRole;
+	}
+
+	@Override
+	public String getUsername() {
+
+		// retorna o atributo "email" que será utilizado como o username
+		return email;
+	}
+
+	// atribuido o valor true porque neste projeto não utilizaremos estes métodos necessários para a interface "UserDetails"
+	@Override
+	public boolean isAccountNonExpired() {
+		//return false;
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		//return false;
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		//return false;
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		//return false;
+		return true;
+	}
+	//
+	//////
 }
