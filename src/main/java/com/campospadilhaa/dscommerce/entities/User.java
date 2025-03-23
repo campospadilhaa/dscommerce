@@ -140,6 +140,10 @@ public class User {
 		return Objects.equals(id, other.id);
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
     // método para adicionar permissões
     public void addRole(Role role) {
     	roles.add(role);
