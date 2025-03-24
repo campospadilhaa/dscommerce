@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.campospadilhaa.dscommerce.dto.ProductDTO;
+import com.campospadilhaa.dscommerce.dto.ProductMinDTO;
 import com.campospadilhaa.dscommerce.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -72,11 +73,11 @@ public class ProductController {
 	// page: o número da página que deverá ser exibida
 	// sort: ordenação + asc/desc
 	@GetMapping
-	public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) { // parametro para gerar paginação
+	public ResponseEntity<Page<ProductMinDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) { // parametro para gerar paginação
 
-		Page<ProductDTO> listaProductDTO = productService.findAll(name, pageable);
+		Page<ProductMinDTO> listaProductMinDTO = productService.findAll(name, pageable);
 
-		return ResponseEntity.ok( listaProductDTO ); // ResponseEntity retorna o status 200
+		return ResponseEntity.ok( listaProductMinDTO ); // ResponseEntity retorna o status 200
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')") // restrito para ADMIN

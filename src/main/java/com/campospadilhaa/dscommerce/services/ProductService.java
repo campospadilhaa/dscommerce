@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.campospadilhaa.dscommerce.dto.ProductDTO;
+import com.campospadilhaa.dscommerce.dto.ProductMinDTO;
 import com.campospadilhaa.dscommerce.entities.Product;
 import com.campospadilhaa.dscommerce.repositories.ProductRepository;
 import com.campospadilhaa.dscommerce.services.exceptions.DatabaseException;
@@ -51,13 +52,13 @@ public class ProductService {
 	}
 
 	@Transactional(readOnly = true) // configuração para lock de somente leitura, a transanção fica mais rápida
-	public Page<ProductDTO> findAll(String name, Pageable pageable) {
+	public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
 
 		// objeto Page que retorna paginação
 		//Page<Product> listaProduct = productRepository.findAll(pageable);
 		Page<Product> listaProduct = productRepository.findByName(name, pageable);
 
-		return listaProduct.map(item -> new ProductDTO(item));
+		return listaProduct.map(item -> new ProductMinDTO(item));
 	}
 
 	@Transactional
