@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,6 +79,7 @@ public class ProductController {
 		return ResponseEntity.ok( listaProductDTO ); // ResponseEntity retorna o status 200
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // restrito para ADMIN
 	@PostMapping
 	public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO productDTO) { // anotation '@Valid' considera as validações definidas no DTO
 
@@ -90,6 +92,7 @@ public class ProductController {
 		return ResponseEntity.created(uri).body(productDTO);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // restrito para ADMIN
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO productDTO) {
 
@@ -98,6 +101,7 @@ public class ProductController {
 		return ResponseEntity.ok( productDTO ); // ResponseEntity retorna o status 200
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // restrito para ADMIN
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 
