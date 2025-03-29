@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.campospadilhaa.dscommerce.entities.Order;
 import com.campospadilhaa.dscommerce.entities.OrderStatus;
+import com.campospadilhaa.dscommerce.entities.Orderitem;
 
 public class OrderDTO {
 
@@ -40,6 +41,12 @@ public class OrderDTO {
 			paymentDTO = new PaymentDTO(order.getPayment());
 		}
 		this.paymentDTO = paymentDTO;
+
+		for (Orderitem orderitem : order.getOrderitems()) {
+
+			OrderItemDTO orderItemDTO = new OrderItemDTO(orderitem);
+			this.listaOrderItemDTO.add(orderItemDTO);
+		}
 	}
 
 	public Long getId() {
