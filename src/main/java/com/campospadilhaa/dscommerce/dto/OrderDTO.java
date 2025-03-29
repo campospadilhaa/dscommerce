@@ -9,6 +9,8 @@ import com.campospadilhaa.dscommerce.entities.Order;
 import com.campospadilhaa.dscommerce.entities.OrderStatus;
 import com.campospadilhaa.dscommerce.entities.Orderitem;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class OrderDTO {
 
 	private Long id;
@@ -16,7 +18,10 @@ public class OrderDTO {
 	private OrderStatus status;
 	private ClientDTO clientDTO;
 	private PaymentDTO paymentDTO;
-	private List<OrderItemDTO> listaOrderItemDTO = new ArrayList<>();
+
+	// validação para que o OrderDTO tenha pelo menos 1 (um) item, pedido
+	@NotEmpty(message = "É necessário que o Pedido tenha pelo menos 1 (um) item")
+	private List<OrderItemDTO> listaItems = new ArrayList<>();
 
 	public OrderDTO(Long id, Instant moment, OrderStatus status, ClientDTO clientDTO, PaymentDTO paymentDTO) {
 
@@ -45,7 +50,7 @@ public class OrderDTO {
 		for (Orderitem orderitem : order.getOrderitems()) {
 
 			OrderItemDTO orderItemDTO = new OrderItemDTO(orderitem);
-			this.listaOrderItemDTO.add(orderItemDTO);
+			this.listaItems.add(orderItemDTO);
 		}
 	}
 
@@ -69,8 +74,8 @@ public class OrderDTO {
 		return paymentDTO;
 	}
 
-	public List<OrderItemDTO> getListaOrderItemDTO() {
-		return listaOrderItemDTO;
+	public List<OrderItemDTO> getListaItems() {
+		return listaItems;
 	}
 
 	@Override
@@ -82,7 +87,7 @@ public class OrderDTO {
 
 		double total = 0.0;
 
-		for (OrderItemDTO orderItemDTO : listaOrderItemDTO) {
+		for (OrderItemDTO orderItemDTO : listaItems) {
 
 			total += orderItemDTO.getSubTotal();
 		}
