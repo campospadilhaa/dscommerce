@@ -34,6 +34,9 @@ public class OrderService {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private AuthService authService;
+
 	@Transactional(readOnly = true) // configuração para lock de somente leitura, a transanção fica mais rápida
 	public OrderDTO findById(Long id) {
 
@@ -43,6 +46,9 @@ public class OrderService {
 		// Order order = optionalOrder.get();
 		Order order = optionalOrder.orElseThrow(
 				() -> new ResourceNotFoundException("Pedido não encontrado"));
+
+		// é permitido acessar o pedido somente se o usuário for: ADMIN ou o DONO DO PEDIDO
+		authService.validateSelfAdmin(order.getClient().getId());
 
 		OrderDTO orderDTO = new OrderDTO(order);
 

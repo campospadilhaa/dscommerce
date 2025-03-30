@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.campospadilhaa.dscommerce.dto.CustomError;
 import com.campospadilhaa.dscommerce.dto.ValidationError;
 import com.campospadilhaa.dscommerce.services.exceptions.DatabaseException;
+import com.campospadilhaa.dscommerce.services.exceptions.ForbiddenException;
 import com.campospadilhaa.dscommerce.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -56,6 +57,16 @@ public class ControllerExceptionHandler {
 
 			err.addError(fieldError.getField(), fieldError.getDefaultMessage());
 		}
+
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(ForbiddenException.class) // configurada a classe de exceção lançada em: ForbiddenException
+	public ResponseEntity<CustomError> forbiddenException(ForbiddenException e, HttpServletRequest request) {
+
+		HttpStatus status = HttpStatus.FORBIDDEN;
+
+		CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
 
 		return ResponseEntity.status(status).body(err);
 	}

@@ -25,7 +25,7 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')") // restrito para ADMIN
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')") // acesso aos pedidos permitido: 'ROLE_ADMIN', 'ROLE_CLIENT'
 	// @PathVariable: parâmetro de rota, obrigatório
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<OrderDTO> findById(@PathVariable Long id) {

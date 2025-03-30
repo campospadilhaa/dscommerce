@@ -166,6 +166,18 @@ public class User implements UserDetails {
     	return false;
     }
 
+    public boolean hasRoler(String roleName) {
+
+    	for (Role role : listaRole) {
+
+    		if(role.getAuthority().equals(roleName)) {
+    			return true;
+    		}
+		}
+
+    	return false;
+    }
+
     ////// implementações necessárias da interface 'UserDetails'
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
