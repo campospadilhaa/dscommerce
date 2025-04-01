@@ -69,7 +69,7 @@ public class OrderService {
 		order.setClient(user);
 
 		// instanciando a lista de itens do pedido
-		for (OrderItemDTO orderItemDTO : orderDTO.getListaItems()) {
+		for (OrderItemDTO orderItemDTO : orderDTO.getItems()) {
 
 			// os itens do pedido possuem relacionadom com: Pedido e Produto
 

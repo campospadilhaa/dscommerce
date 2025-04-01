@@ -18,7 +18,7 @@ public class UserController {
 	private UserService userService;
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')") // identificação do usuário logado disponível para: 'ROLE_ADMIN', 'ROLE_CLIENT'
-	@GetMapping(value = "/logged")
+	@GetMapping(value = "/me")
 	public ResponseEntity<UserDTO> getLogged() {
 
 		UserDTO userDTO = userService.getUserLogged();

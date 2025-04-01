@@ -32,7 +32,7 @@ public class ProductDTO {
 
 	// validação para que o ProductDTO tenha pelo menos 1 (uma) categoria
 	@NotEmpty(message = "É necessário que o Produto tenha pelo menos 1 (uma) categoria")
-	private List<CategoryDTO> listaCategoryDTO = new ArrayList<>();
+	private List<CategoryDTO> categories = new ArrayList<>();
 
 	public ProductDTO() {
 
@@ -56,7 +56,7 @@ public class ProductDTO {
 		this.imgUrl = product.getImgUrl();
 
 		for (Category category : product.getCategories()) {
-			this.listaCategoryDTO.add(new CategoryDTO(category));
+			this.categories.add(new CategoryDTO(category));
 		}
 	}
 
@@ -80,7 +80,7 @@ public class ProductDTO {
 		return imgUrl;
 	}
 
-	public List<CategoryDTO> getListaCategoryDTO() {
-		return listaCategoryDTO;
+	public List<CategoryDTO> getCategories() {
+		return categories;
 	}
 }

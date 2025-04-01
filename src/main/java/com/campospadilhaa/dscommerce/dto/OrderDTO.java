@@ -21,7 +21,7 @@ public class OrderDTO {
 
 	// validação para que o OrderDTO tenha pelo menos 1 (um) item, pedido
 	@NotEmpty(message = "É necessário que o Pedido tenha pelo menos 1 (um) item")
-	private List<OrderItemDTO> listaItems = new ArrayList<>();
+	private List<OrderItemDTO> items = new ArrayList<>();
 
 	public OrderDTO(Long id, Instant moment, OrderStatus status, ClientDTO clientDTO, PaymentDTO paymentDTO) {
 
@@ -50,7 +50,7 @@ public class OrderDTO {
 		for (Orderitem orderitem : order.getOrderitems()) {
 
 			OrderItemDTO orderItemDTO = new OrderItemDTO(orderitem);
-			this.listaItems.add(orderItemDTO);
+			this.items.add(orderItemDTO);
 		}
 	}
 
@@ -74,8 +74,8 @@ public class OrderDTO {
 		return paymentDTO;
 	}
 
-	public List<OrderItemDTO> getListaItems() {
-		return listaItems;
+	public List<OrderItemDTO> getItems() {
+		return items;
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class OrderDTO {
 
 		double total = 0.0;
 
-		for (OrderItemDTO orderItemDTO : listaItems) {
+		for (OrderItemDTO orderItemDTO : items) {
 
 			total += orderItemDTO.getSubTotal();
 		}

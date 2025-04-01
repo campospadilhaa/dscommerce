@@ -84,7 +84,7 @@ public class ProductService {
 
 		product.getCategories().clear();
 
-		for (CategoryDTO categoryDTO : productDTO.getListaCategoryDTO()) {
+		for (CategoryDTO categoryDTO : productDTO.getCategories()) {
 
 			Category category = new Category();
 			category.setId(categoryDTO.getId());
