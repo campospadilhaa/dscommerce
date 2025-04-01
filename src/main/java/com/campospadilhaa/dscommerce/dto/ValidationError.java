@@ -22,6 +22,9 @@ public class ValidationError extends CustomError {
 
 	public void addError(String fieldName, String message) {
 
+		// para evitar duplicação de erro, remove eventuais menssagens que contenha o 'fieldName'
+		listaErros.removeIf( itemmessage -> itemmessage.getFieldName().equals("fieldName") );
+
 		listaErros.add(new FieldMessage(fieldName, message));
 	}
 }
